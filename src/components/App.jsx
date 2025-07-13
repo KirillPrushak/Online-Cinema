@@ -1,5 +1,33 @@
+import { createBrowserRouter, RouterProvider } from 'react-router';
+
+import Layout from './Layout';
+import ActorDetail from './pages/ActorDetail';
+import MovieDetail from './pages/MovieDetail';
+import Movies from './pages/Movies';
+
 function App() {
-  return <div>App</div>;
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <Layout />,
+      children: [
+        {
+          path: '/',
+          element: <Movies />,
+        },
+        {
+          path: '/movies/:id',
+          element: <MovieDetail />,
+        },
+        {
+          path: '/actor/:id',
+          element: <ActorDetail />,
+        },
+      ],
+    },
+  ]);
+
+  return <RouterProvider router={router} />;
 }
 
 export default App;
