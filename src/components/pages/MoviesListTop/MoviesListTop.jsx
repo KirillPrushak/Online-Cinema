@@ -1,6 +1,6 @@
 import { ArrowBack } from '@mui/icons-material';
 import { Button, Stack, Typography } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { TOP_LISTS } from '../../../constants';
@@ -18,6 +18,10 @@ export default function MoviesListTop() {
     type: movieType.value,
     page,
   });
+
+  useEffect(() => {
+    setPage(1);
+  }, [location]);
 
   if (error) return <p>Some error</p>;
 
