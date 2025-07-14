@@ -30,7 +30,7 @@ export default function useMoviesQuery() {
     page,
   });
 
-  const responseSerial = useGetFilmsQuery({
+  const responseSerials = useGetFilmsQuery({
     type: 'TV_SERIES',
     countries,
     genreId: '1',
@@ -52,14 +52,14 @@ export default function useMoviesQuery() {
     responsePopular.isFetching ||
     responseBest.isFetching ||
     responseFilms.isFetching ||
-    responseSerial.isFetching ||
+    responseSerials.isFetching ||
     responseCartoons.isFetching;
 
   const hasError =
     responsePopular.error ||
     responseBest.isFetching ||
     responseFilms.isFetching ||
-    responseSerial.isFetching ||
+    responseSerials.isFetching ||
     responseCartoons.isFetching;
 
   return {
@@ -68,7 +68,7 @@ export default function useMoviesQuery() {
     responsePopular,
     responseBest,
     responseFilms,
-    responseSerial,
+    responseSerials,
     responseCartoons,
   };
 }
