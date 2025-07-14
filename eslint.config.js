@@ -25,6 +25,7 @@ export default defineConfig([
 
     ruler: {
       'prettier/prettier': 'error',
+      'treact/prop-types': 0,
     },
   },
 ]);
