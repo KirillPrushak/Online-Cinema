@@ -1,12 +1,4 @@
-import {
-  Box,
-  IconButton,
-  Link,
-  Rating,
-  Stack,
-  Tooltip,
-  Typography,
-} from '@mui/material';
+import { Box, Link, Rating, Stack, Tooltip } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 
 import styles from './MovieCard.module.css';

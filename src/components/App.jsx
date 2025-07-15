@@ -27,7 +27,7 @@ function App() {
           element: <MoviesListMain />,
         })),
         {
-          path: '/movies/:id',
+          path: '/movie/:id',
           element: <MovieDetail />,
         },
         {

@@ -23,7 +23,9 @@ export default function Movies() {
 
   const serializeDataForCarousel = (data) =>
     data.map((row) => (
-      <BearSlideImage key={row.id} imageUrl={row.posterUrlPreview} />
+      <RouterLink key={row.id} to={`/movie/${row.kinopoiskId}`}>
+        <BearSlideImage imageUrl={row.posterUrlPreview} />
+      </RouterLink>
     ));
 
   const caruselArr = [

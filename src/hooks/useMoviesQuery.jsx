@@ -23,10 +23,10 @@ export default function useMoviesQuery() {
 
   const responseFilms = useGetFilmsQuery({
     type: 'FILM',
-    countries,
+    countries: '1',
     genreId: '1',
-    order,
-    year,
+    order: 'RATING',
+    year: '1000',
     page,
   });
 
@@ -57,10 +57,10 @@ export default function useMoviesQuery() {
 
   const hasError =
     responsePopular.error ||
-    responseBest.isFetching ||
-    responseFilms.isFetching ||
-    responseSerials.isFetching ||
-    responseCartoons.isFetching;
+    responseBest.error ||
+    responseFilms.error ||
+    responseSerials.error ||
+    responseCartoons.error;
 
   return {
     isLoading,
