@@ -8,8 +8,25 @@ import {
   Stack,
 } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
+import { useDispatch } from 'react-redux';
 
-export default function SelectMovies() {
+import { resetQuery, selectQuery } from '../../../features/currentQuerySlice';
+
+export default function SelectMovies({
+  countriesList,
+  genresList,
+  countries,
+  order,
+  year,
+  genreId,
+}) {
+  const dispatch = useDispatch();
+
+  const ordersList = [
+    { title: 'По рейтингу', value: 'RATING' },
+    { title: 'По оценкам', value: 'NUM_VOTE' },
+  ];
+
   return (
     <Stack
       mt={2}
@@ -18,22 +35,38 @@ export default function SelectMovies() {
     >
       <FormControl fullWidth size="small">
         <InputLabel>Сортировка</InputLabel>
-        <Select label="Age">
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+        <Select
+          value={order}
+          onChange={(e) => dispatch(selectQuery({ order: e.target.value }))}
+        >
+          {ordersList.map((order) => (
+            <MenuItem key={order.value} value={order.value}>
+              {order.title}
+            </MenuItem>
+          ))}
         </Select>
       </FormControl>
+
       <FormControl fullWidth size="small">
         <InputLabel>Жанр</InputLabel>
-        <Select label="Genre">
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+        <Select
+          value={genreId}
+          onChange={(e) => dispatch(selectQuery({ genreId: e.target.value }))}
+        >
+          {genresList.map((genre) => (
+            <MenuItem key={genre.id} value={genre.id}>
+              {genre.genre}
+            </MenuItem>
+          ))}
         </Select>
       </FormControl>
+
       <Box>
-        <Button variant="outlined" startIcon={<CloseIcon />}>
+        <Button
+          onClick={() => dispatch(resetQuery())}
+          variant="outlined"
+          startIcon={<CloseIcon />}
+        >
           Сбросить
         </Button>
       </Box>

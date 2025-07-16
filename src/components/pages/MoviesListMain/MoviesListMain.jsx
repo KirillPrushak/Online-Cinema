@@ -5,7 +5,10 @@ import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { MOVIE_LISTS } from '../../../constants';
-import { useGetFilmsQuery } from '../../../services/kinopoiskApi';
+import {
+  useGetFilmsQuery,
+  useGetGenresAndCountriesQuery,
+} from '../../../services/kinopoiskApi';
 import ErrorMessage from '../../ui/ErrorMessage';
 import MoviesList from '../../ui/MoviesList';
 import MoviesListSkeleton from '../../ui/MoviesListSkeleton';
@@ -22,7 +25,7 @@ export default function MoviesListMain() {
   const movieType = MOVIE_LISTS.find((el) => el.url === location.pathname);
   const myGenreId = movieType.url === '/cartoons' ? 18 : genreId;
 
-  const { data, error, isLoading } = useGetFilmsQuery({
+  const responseFilms = useGetFilmsQuery({
     type: movieType.value,
     countries,
     order,
@@ -31,13 +34,17 @@ export default function MoviesListMain() {
     page,
   });
 
+  const responseGenresAndCountries = useGetGenresAndCountriesQuery({});
+
   useEffect(() => {
     setPage(1);
   }, [location]);
 
-  if (error) return <ErrorMessage />;
+  if (responseFilms.error && responseGenresAndCountries.error)
+    return <ErrorMessage />;
 
-  if (isLoading) return <MoviesListSkeleton />;
+  if (responseFilms.isLoading || responseGenresAndCountries.isLoading)
+    return <MoviesListSkeleton />;
 
   return (
     <>
@@ -45,10 +52,17 @@ export default function MoviesListMain() {
         <Button startIcon={<ArrowBack />} onClick={() => navigate(-1)} />
         <Typography variant="h4">{movieType.title}</Typography>
       </Stack>
-      <SelectMovies />
+      <SelectMovies
+        countriesList={responseGenresAndCountries.data.countries}
+        genresList={responseGenresAndCountries.data.genres}
+        countries={countries}
+        order={order}
+        year={year}
+        genreId={genreId}
+      />
       <MoviesList
-        movies={data.items}
-        totalPages={data.totalPages}
+        movies={responseFilms.data.items}
+        totalPages={responseFilms.data.totalPages}
         page={page}
         setPage={setPage}
       />
