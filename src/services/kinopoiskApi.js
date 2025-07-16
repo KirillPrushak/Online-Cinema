@@ -30,6 +30,7 @@ export const kinopoiskApi = createApi({
     //   }) => `/v2.2/films?countries=${countries}&genres=${genreId}
     //     $order=${order}&type=${type}&year=${year}&page=${page}&keyword=${keyword}`,
     // }),
+    // Film
     getFilms: builder.query({
       query: ({ genreId, type = 'FILM', page }) =>
         `/v2.2/films?genres=${genreId}&type=${type}&page=${page}`,
