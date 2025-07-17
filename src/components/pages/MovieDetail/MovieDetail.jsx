@@ -18,6 +18,7 @@ import {
 } from '../../../services/kinopoiskApi';
 import ErrorMessage from '../../ui/ErrorMessage';
 import MovieCard from '../../ui/MovieCard/MovieCard';
+import VideoPlayer from '../../ui/VideoPlayer.jsx/VideoPlayer';
 
 function MovieDetail() {
   const { id } = useParams();
@@ -164,7 +165,7 @@ function MovieDetail() {
         <Typography textAlign="center" variant="h5">
           Смотреть онлайн
         </Typography>
-        <vide />
+        <VideoPlayer />
       </Grid>
       <Stack alignItems="center">
         <Typography variant="h5" gutterBottom>
