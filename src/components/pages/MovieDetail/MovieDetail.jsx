@@ -5,6 +5,7 @@ import {
   ButtonGroup,
   CircularProgress,
   Grid,
+  Stack,
   Typography,
 } from '@mui/material';
 import React from 'react';
@@ -16,10 +17,10 @@ import {
   useGetStaffQuery,
 } from '../../../services/kinopoiskApi';
 import ErrorMessage from '../../ui/ErrorMessage';
+import MovieCard from '../../ui/MovieCard/MovieCard';
 
 function MovieDetail() {
   const { id } = useParams();
-
   const navigate = useNavigate();
 
   const responseFitm = useGetFilmQuery(id);
@@ -28,7 +29,7 @@ function MovieDetail() {
 
   if (
     responseFitm.isLoading ||
-    responseSiquelsAndPrequels.isLoading ||
+    // responseSiquelsAndPrequels.isLoading ||
     responseStaff.isLoading
   ) {
     return (
@@ -38,21 +39,25 @@ function MovieDetail() {
     );
   }
 
-  if (responseFitm.error || responseStaff.error) {
+  if (
+    responseFitm.error ||
+    // responseSiquelsAndPrequels.error ||
+    responseStaff.error
+  ) {
     return <ErrorMessage />;
   }
 
   return (
     <>
-      <Grid container spacing={2} mt={2}>
-        <Grid size={{ xs: 4 }}>
+      <Grid container spacing={2} mt={4} sx={{ mt: { md: 2 } }}>
+        <Grid size={{ md: 4 }}>
           <img
             src={responseFitm.data.posterUrl}
             alt={responseFitm.data.nameRu}
             width="100%"
           />
         </Grid>
-        <Grid size={{ xs: 6 }}>
+        <Grid size={{ md: 6 }}>
           <Grid container gap="10px">
             <Grid size={2}>
               <Button
@@ -117,7 +122,7 @@ function MovieDetail() {
             </Grid>
           </Grid>
         </Grid>
-        <Grid size={{ xs: 2 }}>
+        <Grid size={{ md: 2 }}>
           <Typography variant="h6">В главных ролях</Typography>
           {responseStaff.data
             .filter((el) => el.professionText === 'Актеры')
@@ -154,7 +159,28 @@ function MovieDetail() {
             IMDB
           </Button>
         </ButtonGroup>
+
+        <Grid xs={12}></Grid>
+        <Typography textAlign="center" variant="h5">
+          Смотреть онлайн
+        </Typography>
+        <vide />
       </Grid>
+      <Stack alignItems="center">
+        <Typography variant="h5" gutterBottom>
+          Сиквелы и приквелы
+        </Typography>
+        <Stack
+          direction="row"
+          flexWrap="wrap"
+          justifyContent="center"
+          sx={{ gap: 2 }}
+        >
+          {responseSiquelsAndPrequels.data.map((el) => (
+            <MovieCard key={el.id} movie={el} reload />
+          ))}
+        </Stack>
+      </Stack>
     </>
   );
 }
