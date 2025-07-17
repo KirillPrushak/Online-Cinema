@@ -51,14 +51,14 @@ function MovieDetail() {
   return (
     <>
       <Grid container spacing={2} mt={4} sx={{ mt: { md: 2 } }}>
-        <Grid size={{ md: 4 }}>
+        <Grid item size={{ md: 4 }}>
           <img
             src={responseFitm.data.posterUrl}
             alt={responseFitm.data.nameRu}
             width="100%"
           />
         </Grid>
-        <Grid size={{ md: 6 }}>
+        <Grid item size={{ md: 6 }}>
           <Grid container gap="10px">
             <Grid size={2}>
               <Button
@@ -67,7 +67,7 @@ function MovieDetail() {
                 onClick={() => navigate(-1)}
               />
             </Grid>
-            <Grid alignContent="center">
+            <Grid item alignContent="center">
               {<Typography variant="h5">{responseFitm.data.nameRu}</Typography>}
             </Grid>
           </Grid>
@@ -167,21 +167,24 @@ function MovieDetail() {
         </Typography>
         <VideoPlayer />
       </Grid>
-      <Stack alignItems="center">
-        <Typography variant="h5" gutterBottom>
-          Сиквелы и приквелы
-        </Typography>
-        <Stack
-          direction="row"
-          flexWrap="wrap"
-          justifyContent="center"
-          sx={{ gap: 2 }}
-        >
-          {responseSiquelsAndPrequels.data.map((el) => (
-            <MovieCard key={el.id} movie={el} reload />
-          ))}
+
+      {responseSiquelsAndPrequels.data && (
+        <Stack alignItems="center">
+          <Typography variant="h5" gutterBottom>
+            Сиквелы и приквелы
+          </Typography>
+          <Stack
+            direction="row"
+            flexWrap="wrap"
+            justifyContent="center"
+            sx={{ gap: 2 }}
+          >
+            {responseSiquelsAndPrequels.data.map((el) => (
+              <MovieCard key={el.filmId} movie={el} reload />
+            ))}
+          </Stack>
         </Stack>
-      </Stack>
+      )}
     </>
   );
 }
