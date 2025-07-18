@@ -7,9 +7,13 @@ import App from './components/App.jsx';
 
 import 'bear-react-carousel/dist/index.css';
 
+import ToggleColorMode from './context/ToggleColorMode.jsx';
+
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
-    <CssBaseline />
-    <App />
+    <ToggleColorMode>
+      <CssBaseline />
+      <App />
+    </ToggleColorMode>
   </Provider>,
 );
